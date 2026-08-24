@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.title.label  }}
+        {{ form.title }}
+        {{ form.title.errors }}
+        <hr>
+        {{ form.description.label  }}
+        {{ form.description }}
+        {{ form.description.errors }}
+        <hr>
+        <button type="submit">
+            ثبت
+        </button>       
+    </form>
+
+    {% for item in items %}
+    <p>{{ forloop.counter }} - {{ item.title }} - {{ item.description }}</p>
+    <form method="post" action="{% url 'delete' item.id %}">
+        {% csrf_token %}
+        <button type="submit">حذف</button>
+    </form>
+    <a href="{% url 'update' item.id %}">ویرایش</a>
+    {% endfor %}
+
+<form method="post" action="{% url 'logout' %}">
+
+    {% csrf_token %}
+
+
+    <button type="submit">
+        logout
+    </button>
+    
+</form>
+
+{% endblock %}
